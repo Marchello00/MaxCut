@@ -1,18 +1,29 @@
 #pragma once
 
-#include "include/maxcut/graph.hpp"
+#include "graph.hpp"
 
 namespace graph::maxcut {
 
 class MaxCutSolver {
  public:
-  MaxCutSolver(const Graph& graph) : graph_(graph) {
-  }
+  MaxCutSolver(const Graph& graph);
 
   WeightT Solve();
 
- private:
+  const std::vector<bool>& GetCut() const;
+
+  WeightT GetCutWeight(const std::vector<bool>& cut) const;
+
+ protected:
+  virtual WeightT Solve_() = 0;
+
+ protected:
   const Graph& graph_;
+
+  std::vector<bool> answer_;  // 0 if in left part of cut, else 1
+
+ private:
+  bool solved_;
 };
 
 }  // namespace graph::maxcut

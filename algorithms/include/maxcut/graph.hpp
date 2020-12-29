@@ -1,13 +1,12 @@
 #pragma once
 
 #include "iterating.hpp"
+#include "weight.hpp"
 
 #include <iostream>
 #include <vector>
 
 namespace graph {
-
-using WeightT = int;
 
 struct Edge {
   // Networks in MaxCut/MinCut problems are usually oriented
@@ -31,7 +30,8 @@ class Graph {
 
   size_t AddEdge(size_t from, size_t to, WeightT weight);
 
-  void ReadGraph(size_t edge_count, std::istream& in = std::cin);
+  void ReadGraph(size_t edge_count, bool undirected = false,
+                 std::istream& in = std::cin);
 
   iterating::VertexNeighbourhood operator[](size_t vertex) const;
 

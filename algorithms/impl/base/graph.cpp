@@ -21,13 +21,17 @@ size_t graph::Graph::AddEdge(size_t from, size_t to, graph::WeightT weight) {
   return new_edge.index;
 }
 
-void graph::Graph::ReadGraph(size_t edge_count, std::istream& in) {
+void graph::Graph::ReadGraph(size_t edge_count, bool undirected,
+                             std::istream& in) {
   for (size_t i = 0; i < edge_count; ++i) {
     size_t from, to;
     WeightT weight;
     in >> from >> to >> weight;
     --from, --to;
     AddEdge(from, to, weight);
+    if (undirected) {
+      AddEdge(to, from, weight);
+    }
   }
 }
 
