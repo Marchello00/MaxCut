@@ -29,14 +29,14 @@ graph::maxcut::DeterminateHalfOptimal::DeterminateHalfOptimal(
 
 graph::WeightT graph::maxcut::DeterminateHalfOptimal::Solve_() {
   for (size_t v = 0; v < graph_.Size(); ++v) {
-    size_t left_neighbours = 0;
-    size_t right_neighbours = 0;
+    WeightT left_neighbours = 0;
+    WeightT right_neighbours = 0;
     for (auto& edge : graph_[v]) {
       if (edge.to > v) {
         continue;
       }
-      left_neighbours += !answer_[edge.to];
-      right_neighbours += answer_[edge.to];
+      left_neighbours += !answer_[edge.to] * edge.weight;
+      right_neighbours += answer_[edge.to] * edge.weight;
     }
     answer_[v] = left_neighbours > right_neighbours;
   }

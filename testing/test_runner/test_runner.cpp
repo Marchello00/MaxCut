@@ -13,13 +13,32 @@ using graph::maxcut::GoemansWilliamson;
 using graph::maxcut::MaxCutSolver;
 using graph::maxcut::RandomHalfOptimal;
 
-void Test(std::istream& in = std::cin, bool bruteforce = false,
-          bool random = false, bool greed = false,
-          bool goemans_williamson = false) {
+void Solve(std::istream& in = std::cin, bool bruteforce = false,
+           bool random = false, bool greed = false,
+           bool goemans_williamson = false) {
   size_t n, m;
   in >> n >> m;
   Graph g(n);
   g.ReadGraph(m, true, in);
+
+  // Only for analyse
+  graph::WeightT max_cut_hint;
+  if (in >> max_cut_hint) {
+    std::cout << "Known lower bound: " << max_cut_hint << "\n";
+  }
+  graph::WeightT upper_bound = 0;
+  graph::WeightT negative_weight = 0;
+  for (size_t v = 0; v < g.Size(); ++v) {
+    for (auto& e : g[v]) {
+      if (e.weight > 0) {
+        upper_bound += e.weight;
+      } else {
+        negative_weight += e.weight;
+      }
+    }
+  }
+  std::cout << "Known upper bound: " << upper_bound << "\n";
+  std::cout << "Negative weight: " << negative_weight << "\n";
 
   BruteForceMaxCut brute_force(g);
   RandomHalfOptimal random_half_optimal(g);
@@ -42,8 +61,13 @@ void Test(std::istream& in = std::cin, bool bruteforce = false,
   }
 
   for (auto [name, solver] : solvers) {
+    auto start_time = clock();
     auto cut_weight = solver->Solve();
-    std::cout << name << ": " << cut_weight << "\n";
+    auto finish_time = clock();
+    auto required_time = double(finish_time - start_time) / CLOCKS_PER_SEC;
+    std::cout << name << " (answer): " << cut_weight << "\n";
+    std::cout << name << " (time, sec): " << std::fixed << std::setprecision(5)
+              << required_time << "\n";
   }
 }
 
@@ -74,6 +98,6 @@ int main(int argc, char* argv[]) {
     }
   }
   std::fstream in(input_file, std::fstream::in);
-  Test(in, bruteforce, random, greed, goemans_williamson);
+  Solve(in, bruteforce, random, greed, goemans_williamson);
   return 0;
 }
