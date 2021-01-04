@@ -3,7 +3,12 @@
 
 #include <iostream>
 
-graph::Graph::Graph(size_t n) : n_(n), edges_from_vertex_(n_) {
+graph::Graph::Graph(size_t n)
+    : n_(n), edges_from_vertex_(n_), edge_between_vertexes_(n_) {
+  for (auto& v : edge_between_vertexes_) {
+    v.resize(n);
+  }
+  edges_.push_back(Edge{0, 0, 0, 0});
 }
 
 size_t graph::Graph::Size() const {
@@ -18,6 +23,7 @@ size_t graph::Graph::AddEdge(size_t from, size_t to, graph::WeightT weight) {
   Edge new_edge{from, to, weight, edges_.size()};
   edges_.push_back(new_edge);
   edges_from_vertex_[from].push_back(new_edge.index);
+  edge_between_vertexes_[from][to] = new_edge.index;
   return new_edge.index;
 }
 
@@ -38,4 +44,9 @@ void graph::Graph::ReadGraph(size_t edge_count, bool undirected,
 graph::iterating::VertexNeighbourhood graph::Graph::operator[](
     size_t vertex) const {
   return graph::iterating::VertexNeighbourhood(*this, vertex);
+}
+
+const graph::Edge& graph::Graph::GetEdgeBetweenVertexes(size_t from,
+                                                        size_t to) const {
+  return edges_[edge_between_vertexes_[from][to]];
 }

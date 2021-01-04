@@ -28,6 +28,8 @@ class Graph {
 
   [[nodiscard]] const Edge& GetEdgeByIndex(size_t index) const;
 
+  const Edge& GetEdgeBetweenVertexes(size_t from, size_t to) const;
+
   size_t AddEdge(size_t from, size_t to, WeightT weight);
 
   void ReadGraph(size_t edge_count, bool undirected = false,
@@ -40,6 +42,8 @@ class Graph {
 
   std::vector<Edge> edges_;
   std::vector<std::vector<size_t>> edges_from_vertex_;
+
+  std::vector<std::vector<size_t>> edge_between_vertexes_;
 };
 
 }  // namespace graph

@@ -7,8 +7,17 @@ graph::maxcut::RandomHalfOptimal::RandomHalfOptimal(const graph::Graph& graph,
 
 graph::WeightT graph::maxcut::RandomHalfOptimal::Solve_() {
   std::mt19937 rng(seed_);
-  for (unsigned v = 0; v < graph_.Size(); ++v) {
-    answer_[v] = rng() & 1;
+  auto max_found_weight = kMinWeight;
+  for (int repeat = 0; repeat < 15; ++repeat) {
+    std::vector<bool> current_answer(graph_.Size());
+    for (unsigned v = 0; v < graph_.Size(); ++v) {
+      current_answer[v] = rng() & 1;
+    }
+    auto current_weight = GetCutWeight(current_answer);
+    if (current_weight >= max_found_weight) {
+      max_found_weight = current_weight;
+      answer_ = current_answer;
+    }
   }
   return GetCutWeight(GetCut());
 }
