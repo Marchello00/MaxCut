@@ -1,0 +1,9 @@
+Known upper bound: 99
+BruteForce (answer): 65
+BruteForce (time, sec): 6.63283
+Random (answer): 59
+Random (time, sec): 0.00011
+Greed (answer): 60
+Greed (time, sec): 0.00002
+Goemans-Williamson (answer): 65
+Goemans-Williamson (time, sec): 0.02516

@@ -1,0 +1,7 @@
+Known lower bound: 62391
+Known upper bound: 180872
+Negative weight: 0
+Greed (answer): 50056
+Greed (time, sec): 0.00035
+Goemans-Williamson (answer): 62391
+Goemans-Williamson (time, sec): 0.15341

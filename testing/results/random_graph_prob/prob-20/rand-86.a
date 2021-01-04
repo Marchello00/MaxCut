@@ -1,0 +1,7 @@
+Known upper bound: 940
+Random (answer): 496
+Random (time, sec): 0.00086
+Greed (answer): 568
+Greed (time, sec): 0.00012
+Goemans-Williamson (answer): 578
+Goemans-Williamson (time, sec): 0.30231
