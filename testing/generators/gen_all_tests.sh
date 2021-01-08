@@ -28,11 +28,11 @@ for p in 10 20 30 40 50 60 70 80 90; do
 done
 
 # random graph of size 100 with different weights
-echo "Generating graphs of size 100 with p% edges..."
-for p in 10 20 30 40 50 60 70 80 90; do
-  mkdir -p ../tests/random_graph_prob/prob-${p}
+echo "Generating graphs of size 100 with different weights..."
+for max_weight in 5 10 50 100 1000 10000 100000; do
+  mkdir -p ../tests/random_graph_weights/weight-${max_weight}
   for seed in {1..100}; do
-    ../../bin/RandomGraphGenerator 100 ${seed} 1 ${p} >../tests/random_graph_prob/prob-${p}/rand-${seed}
+    ../../bin/RandomGraphGenerator 100 ${seed} ${max_weight} >../tests/random_graph_weights/weight-${max_weight}/rand-${seed}
   done
 done
 
